@@ -7,25 +7,37 @@ MorseDecoder::MorseDecoder(std::unique_ptr<IMorseDictionary> dict)
 {
 }
 
-std::string MorseDecoder::encode(std::string_view input) const
+Result<std::string> MorseDecoder::encode(std::string_view input) const
 {
-    auto fold = [this](std::string a, char c) {
-        return a.append(" ").append(m_dict->encode(c));
-    };
-    return std::accumulate(std::next(input.cbegin()), input.cend(), std::string(m_dict->encode(input.front())), fold);
+    std::string encodedString;
+    for (const auto& symbol : input)
+    {
+        auto encodingSymbolResult = m_dict->encode(symbol);
+        if (encodingSymbolResult.status == Status::Error)
+        {
+            return Result<std::string>::makeError(encodingSymbolResult.errorMsg);
+        }
+        encodedString.append(encodingSymbolResult.value);
+    }
+    return Result<std::string>::makeSuccess(encodedString);
 }
 
-std::string MorseDecoder::decode(std::string_view input) const
+Result<std::string> MorseDecoder::decode(std::string_view input) const
 {
-    std::string res;
+    std::string decodedString;
 
-    size_t end = 0;
-    while (end != std::string_view::npos)
+    size_t spacePosition = 0;
+    while (spacePosition != std::string_view::npos)
     {
-        end = input.find(' ');
-        res.append(1, m_dict->decode(input.substr(0, end)));
-        input.remove_prefix(end + 1);
+        spacePosition = input.find(' ');
+        auto decodingSymbolResult = m_dict->decode(input.substr(0, spacePosition));
+        if (decodingSymbolResult.status == Status::Error)
+        {
+            return Result<std::string>::makeError(decodingSymbolResult.errorMsg);
+        }
+        decodedString.append(1, decodingSymbolResult.value);
+        input.remove_prefix(spacePosition + 1);
     }
 
-    return res;
+    return Result<std::string>::makeSuccess(decodedString);
 }

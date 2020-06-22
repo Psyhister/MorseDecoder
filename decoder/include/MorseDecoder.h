@@ -5,13 +5,15 @@
 #include <string_view>
 #include <memory>
 #include "IMorseDictionary.h"
+#include "Result.h"
 
 class MorseDecoder
 {
 public:
     MorseDecoder(std::unique_ptr<IMorseDictionary> dict);
-    std::string encode(std::string_view input) const;
-    std::string decode(std::string_view input) const;
+
+    Result<std::string> encode(std::string_view input) const;
+    Result<std::string> decode(std::string_view input) const;
 
     MorseDecoder(const MorseDecoder&) = delete;
     MorseDecoder& operator=(const MorseDecoder&) = delete;

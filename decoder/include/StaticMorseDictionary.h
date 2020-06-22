@@ -5,8 +5,8 @@
 class StaticMorseDictionary : public IMorseDictionary
 {
 public:
-    std::string_view encode(char c) const override;
-    char decode(std::string_view input) const override;
+    Result<std::string_view> encode(char c) const override;
+    Result<char> decode(std::string_view input) const override;
 };
 
 #endif // STATICMORSEDICTIONARY_H

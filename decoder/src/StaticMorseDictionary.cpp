@@ -33,16 +33,32 @@ constexpr std::array<std::string_view, 26> LETTER_TO_MORSE {
 
 constexpr std::string_view SPACE = ".......";
 
-std::string_view StaticMorseDictionary::encode(char c) const
+Result<std::string_view> StaticMorseDictionary::encode(char c) const
 {
-    return c == ' ' ? SPACE : LETTER_TO_MORSE[c - 'A'];
+    if (c == ' ')
+    {
+        return Result<std::string_view>::makeSuccess(SPACE);
+    }
+    else
+    {
+        int idx = c - 'A';
+        if (idx < 0 || idx >= static_cast<int>(LETTER_TO_MORSE.size()))
+        {
+            return Result<std::string_view>::makeError("Unsupported character");
+        }
+        return Result<std::string_view>::makeSuccess(LETTER_TO_MORSE[idx]);
+    }
 }
 
-char StaticMorseDictionary::decode(std::string_view input) const
+Result<char> StaticMorseDictionary::decode(std::string_view input) const
 {
     if (input == SPACE)
-        return ' ';
+        return Result<char>::makeSuccess(' ');
 
     auto it = std::find(LETTER_TO_MORSE.cbegin(), LETTER_TO_MORSE.cend(), input);
-    return 'A' + std::distance(LETTER_TO_MORSE.cbegin(), it);
+    if (it == LETTER_TO_MORSE.cend())
+    {
+        return Result<char>::makeError("Unsupported morse code sequence");
+    }
+    return Result<char>::makeSuccess('A' + std::distance(LETTER_TO_MORSE.cbegin(), it));
 }

@@ -8,6 +8,7 @@ set(HEADERS
     include/IMorseDictionary.h
     include/StaticMorseDictionary.h
     include/MorseDecoder.h
+    include/Result.h
     )
 
 add_library(decoder STATIC ${SRC_FILES} ${HEADERS})

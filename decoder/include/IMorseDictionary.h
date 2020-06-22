@@ -3,12 +3,13 @@
 
 #include <string>
 #include <string_view>
+#include "Result.h"
 
 class IMorseDictionary
 {
 public:
-    virtual std::string_view encode(char c) const = 0;
-    virtual char decode(std::string_view input) const = 0;
+    virtual Result<std::string_view> encode(char c) const = 0;
+    virtual Result<char> decode(std::string_view input) const = 0;
     virtual ~IMorseDictionary() = default;
 };
 
