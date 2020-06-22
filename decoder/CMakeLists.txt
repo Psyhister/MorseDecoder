@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.15)
 
 set(SRC_FILES
+    src/StaticMorseDictionary.cpp
     )
 set(HEADERS
     include/IMorseDictionary.h
+    include/StaticMorseDictionary.h
     )
 
 add_library(decoder STATIC ${SRC_FILES} ${HEADERS})
