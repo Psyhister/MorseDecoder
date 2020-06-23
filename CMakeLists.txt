@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
-
 project(MorseDecoder)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 include(cmake/PreventInSourceBuilds.cmake)
 include(cmake/CompilerWarnings.cmake)
 include(cmake/StaticAnalyzers.cmake)
@@ -10,9 +13,6 @@ set(CMAKE_AUTOMOC ON)
 
 add_library(project_warnings INTERFACE)
 set_project_warnings(project_warnings)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(decoder)
 
@@ -26,6 +26,8 @@ add_executable(MorseDecoder ${SRC_FILES})
 target_link_libraries(MorseDecoder PRIVATE decoder
                                            project_warnings
                                            Qt5::Widgets)
+
+# Fuzzing target
 
 option(ENABLE_FUZZING "Enable fuzz testing" OFF)
 if(ENABLE_FUZZING)
