@@ -2,6 +2,7 @@
 
 #include <QVBoxLayout>
 #include <QPlainTextEdit>
+#include <QLabel>
 #include <QRegularExpression>
 
 #include "StaticMorseDictionary.h"
@@ -12,12 +13,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
+    QVBoxLayout *inputLayout = new QVBoxLayout;
+    inputLayout->addWidget(new QLabel(tr("Enter your text or Morse code here:"), this));
+
     QPlainTextEdit *inputEdit = new QPlainTextEdit(this);
-    mainLayout->addWidget(inputEdit);
+    inputLayout->addWidget(inputEdit);
+
+    mainLayout->addLayout(inputLayout);
+
+    QVBoxLayout *outputLayout = new QVBoxLayout;
+    outputLayout->addWidget(new QLabel(tr("Result of conversion:"), this));
 
     m_outputTextEdit = new QPlainTextEdit(this);
     m_outputTextEdit->setReadOnly(true);
-    mainLayout->addWidget(m_outputTextEdit);
+    outputLayout->addWidget(m_outputTextEdit);
+
+    mainLayout->addLayout(outputLayout);
 
     setLayout(mainLayout);
 
