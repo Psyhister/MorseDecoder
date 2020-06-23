@@ -10,7 +10,7 @@
 class MorseDecoder
 {
 public:
-    MorseDecoder(std::unique_ptr<IMorseDictionary> dict);
+    MorseDecoder(std::unique_ptr<IMorseDictionary>&& dict);
 
     Result<std::string> encode(std::string_view input) const;
     Result<std::string> decode(std::string_view input) const;

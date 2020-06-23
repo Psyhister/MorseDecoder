@@ -1,8 +1,9 @@
 #include "MorseDecoder.h"
+
 #include <numeric>
 #include <algorithm>
 
-MorseDecoder::MorseDecoder(std::unique_ptr<IMorseDictionary> dict)
+MorseDecoder::MorseDecoder(std::unique_ptr<IMorseDictionary>&& dict)
     : m_dict(std::move(dict))
 {
 }
