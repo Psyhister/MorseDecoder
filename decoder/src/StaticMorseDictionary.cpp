@@ -41,7 +41,7 @@ Result<std::string_view> StaticMorseDictionary::encode(char c) const
     }
     else
     {
-        int idx = c - 'A';
+        int idx = std::toupper(c) - 'A';
         if (idx < 0 || idx >= static_cast<int>(LETTER_TO_MORSE.size()))
         {
             return Result<std::string_view>::makeError("Unsupported character");
