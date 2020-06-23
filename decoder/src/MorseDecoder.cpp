@@ -18,6 +18,7 @@ Result<std::string> MorseDecoder::encode(std::string_view input) const
             return Result<std::string>::makeError(encodingSymbolResult.errorMsg);
         }
         encodedString.append(encodingSymbolResult.value);
+        encodedString.append(1, ' ');
     }
     return Result<std::string>::makeSuccess(encodedString);
 }
