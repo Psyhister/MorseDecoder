@@ -21,6 +21,7 @@ Result<std::string> MorseDecoder::encode(std::string_view input) const
         encodedString.append(encodingSymbolResult.value);
         encodedString.append(1, ' ');
     }
+    encodedString.pop_back(); // easier to remove last space than rewriting the loop
     return Result<std::string>::makeSuccess(encodedString);
 }
 
