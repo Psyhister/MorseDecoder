@@ -26,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::onInputChanged(const QString& inputText)
 {
+    if (inputText.isEmpty())
+    {
+        m_outputTextEdit->clear();
+        return;
+    }
 
     QRegularExpression alphaRegExp("[a-zA-Z]");
     QRegularExpression morseRegExp("[\\.\\- ]");
