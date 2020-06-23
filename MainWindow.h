@@ -1,15 +1,24 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QWidget>
+#include "MorseDecoder.h"
 
-class MainWindow : public QMainWindow
+class QPlainTextEdit;
+
+class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
-signals:
+private slots:
+    void onInputChanged(const QString& inputText);
+
+private:
+    QPlainTextEdit *m_outputTextEdit = nullptr;
+
+    MorseDecoder m_morseDecoder;
 
 };
 
