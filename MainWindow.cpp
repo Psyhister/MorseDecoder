@@ -28,9 +28,15 @@ void MainWindow::onInputChanged(const QString& inputText)
 {
 
     QRegularExpression alphaRegExp("[a-zA-Z]");
+    QRegularExpression morseRegExp("[\\.\\- ]");
     if (alphaRegExp.match(inputText).hasMatch())
     {
         auto result = m_morseDecoder.encode(inputText.toStdString());
+        m_outputTextEdit->setPlainText(QString::fromStdString(result.status == Status::Ok ? result.value : result.errorMsg));
+    }
+    else if (morseRegExp.match(inputText).hasMatch())
+    {
+        auto result = m_morseDecoder.decode(inputText.toStdString());
         m_outputTextEdit->setPlainText(QString::fromStdString(result.status == Status::Ok ? result.value : result.errorMsg));
     }
 }
